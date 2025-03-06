@@ -28,6 +28,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Wand2 } from "lucide-react";
+import axios from "axios";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 interface CompanionFormProps {
   initialData: Companion | null;
   categories: Category[];
@@ -70,6 +73,8 @@ const formSchema = z.object({
   }),
 });
 const CompanionForm = ({ initialData, categories }: CompanionFormProps) => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
@@ -84,7 +89,21 @@ const CompanionForm = ({ initialData, categories }: CompanionFormProps) => {
 
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      if (initialData) {
+        // update companion
+        await axios.patch(`/api/companion/${initialData.id}`, values);
+      } else {
+        // create companion
+        await axios.post("/api/companion", values);
+      }
+      toast.success("success");
+      router.refresh();
+      router.push("/");
+    } catch (error) {
+      console.log("[COMPANION_FORM_ERROR]", error);
+      toast.error("Something went wrong");
+    }
   };
   return (
     <div className="h-full p-4 space-y-2 max-w-3xl mx-auto">
