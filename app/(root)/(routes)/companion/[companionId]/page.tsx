@@ -9,9 +9,10 @@ import CompanionForm from "./components/companion-form";
 const CompanionIdPage = async ({ params }: CompanionIdPageProps) => {
   // todo: check subscription
 
+  const { companionId } = await params;
   const companion = await prismadb.companion.findUnique({
     where: {
-      id: params.companionId,
+      id: companionId,
     },
   });
 
