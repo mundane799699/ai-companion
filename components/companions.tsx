@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { MessageSquareIcon } from "lucide-react";
+import { MessagesSquareIcon } from "lucide-react";
 interface CompanionsProps {
   data: (Companion & { _count: { messages: number } })[];
 }
@@ -48,7 +48,7 @@ export const Companions = ({ data }: CompanionsProps) => {
             <CardFooter className="flex items-center justify-between text-xs text-muted-foreground">
               <p className="lowercase">@{item.userName}</p>
               <div className="flex items-center">
-                <MessageSquareIcon className="w-3 h-3 mr-1" />
+                <MessagesSquareIcon className="w-3 h-3 mr-1" />
                 {item._count.messages}
               </div>
             </CardFooter>
