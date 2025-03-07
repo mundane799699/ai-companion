@@ -15,9 +15,10 @@ const ChatIdPage = async ({ params }: ChatIdPageProps) => {
   if (!userId) {
     return <RedirectToSignIn />;
   }
+  const { chatId } = await params;
   const companion = await prismadb.companion.findUnique({
     where: {
-      id: params.chatId,
+      id: chatId,
     },
     include: {
       messages: {
