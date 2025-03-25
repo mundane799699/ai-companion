@@ -30,7 +30,9 @@ export class MemoryManager {
     companionFileName: string
   ) {
     const pineconeClient = <Pinecone>this.vectorDBClient;
-    const pineconeIndex = pineconeClient.Index(process.env.PINECONE_INDEX!);
+    const pineconeIndex = pineconeClient.Index(
+      process.env.PINECONE_INDEX! || ""
+    );
 
     const vectorStore = await PineconeStore.fromExistingIndex(
       new OpenAIEmbeddings({

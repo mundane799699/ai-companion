@@ -35,6 +35,9 @@ const ChatClient = ({ companion }: ChatClientProps) => {
         setInput("");
         router.refresh();
       },
+      onError: (error) => {
+        console.log("onError", error);
+      },
     });
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
