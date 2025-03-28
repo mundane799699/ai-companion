@@ -87,6 +87,25 @@ export async function POST(
       prompt: inputPrompt,
     });
 
+    let fullText = "";
+    for await (const chunk of result.textStream) {
+      fullText += chunk;
+    }
+    await memoryManager.writeToHistory("AI: " + fullText.trim(), companionKey);
+    await prismadb.companion.update({
+      where: {
+        id: chatId,
+      },
+      data: {
+        messages: {
+          create: {
+            userId: user.id,
+            role: "system",
+            content: fullText.trim(),
+          },
+        },
+      },
+    });
     return result.toDataStreamResponse();
   } catch (error) {
     console.log("[CHAT_POST]", error);

@@ -13,14 +13,14 @@ export interface ChatMessageProps {
   role: "system" | "user";
   content?: string;
   isLoading?: boolean;
-  src?: string;
+  companionSrc?: string;
 }
 
 export const ChatMessage = ({
   role,
   content,
   isLoading,
-  src,
+  companionSrc,
 }: ChatMessageProps) => {
   const { theme } = useTheme();
 
@@ -39,7 +39,7 @@ export const ChatMessage = ({
         role === "user" && "justify-end"
       )}
     >
-      {role !== "user" && src && <BotAvatar src={src} />}
+      {role !== "user" && companionSrc && <BotAvatar src={companionSrc} />}
       <div className="rounded-md px-4 py-2 max-w-sm text-sm bg-primary/10">
         {isLoading ? (
           <BeatLoader color={theme === "light" ? "black" : "white"} size={5} />
