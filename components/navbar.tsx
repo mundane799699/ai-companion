@@ -8,12 +8,18 @@ import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import MobileSidebar from "./mobile-sidebar";
+import { useProModal } from "@/hooks/use-pro-modal";
 const font = Poppins({
   weight: "600",
   subsets: ["latin"],
 });
 
-const Navbar = () => {
+interface NavbarProps {
+  isPro: boolean;
+}
+
+const Navbar = ({ isPro }: NavbarProps) => {
+  const proModal = useProModal();
   return (
     <div
       className="fixed w-full z-50 flex justify-between 
@@ -33,10 +39,12 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex items-center gap-x-3">
-        <Button size="sm" variant="premium">
-          Upgrade
-          <Sparkles className="w-4 h-4 ml-2 fill-white text-white" />
-        </Button>
+        {!isPro && (
+          <Button size="sm" variant="premium" onClick={proModal.onOpen}>
+            Upgrade
+            <Sparkles className="w-4 h-4 ml-2 fill-white text-white" />
+          </Button>
+        )}
         <ModeToggle />
         <UserButton />
       </div>

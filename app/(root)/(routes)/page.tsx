@@ -17,7 +17,8 @@ const RootPage = async ({ searchParams }: RootPageProps) => {
     where: {
       categoryId: categoryId,
       name: {
-        search: name,
+        contains: name,
+        mode: "insensitive",
       },
     },
     orderBy: {
