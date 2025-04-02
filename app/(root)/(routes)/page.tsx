@@ -5,10 +5,7 @@ import { Categories } from "@/components/categories";
 import { Companions } from "@/components/companions";
 
 interface RootPageProps {
-  searchParams: {
-    categoryId: string;
-    name: string;
-  };
+  searchParams: Promise<{ categoryId: string; name: string }>;
 }
 
 const RootPage = async ({ searchParams }: RootPageProps) => {

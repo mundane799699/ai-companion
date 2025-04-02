@@ -9,7 +9,7 @@ import { createXai } from "@ai-sdk/xai";
 
 export async function POST(
   request: Request,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
   try {
     const { prompt } = await request.json();

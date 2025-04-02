@@ -5,14 +5,15 @@ import { checkSubscription } from "@/lib/subscription";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { companionId: string } }
+  { params }: { params: Promise<{ companionId: string }> }
 ) {
   try {
     const body = await req.json();
     const user = await currentUser();
     const { src, name, description, instructions, seed, categoryId } = body;
 
-    if (!params.companionId) {
+    const { companionId } = await params;
+    if (!companionId) {
       return new NextResponse("Companion ID is required", { status: 400 });
     }
 
@@ -36,7 +37,7 @@ export async function PATCH(
     }
     const companion = await prismadb.companion.update({
       where: {
-        id: params.companionId,
+        id: companionId,
         userId: user.id,
       },
       data: {
@@ -59,17 +60,18 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { companionId: string } }
+  { params }: { params: Promise<{ companionId: string }> }
 ) {
   try {
     const { userId } = await auth();
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+    const { companionId } = await params;
     const companion = await prismadb.companion.delete({
       where: {
         userId,
-        id: params.companionId,
+        id: companionId,
       },
     });
     return NextResponse.json(companion);
