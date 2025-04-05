@@ -44,7 +44,7 @@ export async function GET() {
               name: "Companion Pro",
               description: "Create Custom AI Companions",
             },
-            unit_amount: 999,
+            unit_amount: 199,
             recurring: {
               interval: "month",
             },
