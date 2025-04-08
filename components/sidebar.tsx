@@ -18,18 +18,18 @@ const Sidebar = ({ isPro }: SidebarProps) => {
     {
       icon: Home,
       label: "Home",
-      href: "/",
+      href: "/dashboard",
       pro: false,
     },
     {
       icon: Plus,
-      href: "/companion/new",
+      href: "/dashboard/companion/new",
       label: "Create",
       pro: true,
     },
     {
       icon: Settings,
-      href: "/settings",
+      href: "/dashboard/settings",
       label: "Settings",
       pro: false,
     },

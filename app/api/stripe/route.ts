@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { absoluteUrl } from "@/lib/utils";
 
-const settingsUrl = absoluteUrl("/settings");
+const settingsUrl = absoluteUrl("/dashboard/settings");
 
 export async function GET() {
   try {

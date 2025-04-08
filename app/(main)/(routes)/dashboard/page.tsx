@@ -1,5 +1,4 @@
 import SearchInput from "@/components/search-input";
-import { UserButton } from "@clerk/nextjs";
 import prismadb from "@/lib/prismadb";
 import { Categories } from "@/components/categories";
 import { Companions } from "@/components/companions";
