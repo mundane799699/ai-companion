@@ -2,12 +2,18 @@ import SearchInput from "@/components/search-input";
 import prismadb from "@/lib/prismadb";
 import { Categories } from "@/components/categories";
 import { Companions } from "@/components/companions";
+import { auth } from "@clerk/nextjs/server";
+import { RedirectToSignIn } from "@clerk/nextjs";
 
 interface RootPageProps {
   searchParams: Promise<{ categoryId: string; name: string }>;
 }
 
 const RootPage = async ({ searchParams }: RootPageProps) => {
+  const { userId } = await auth();
+  if (!userId) {
+    return <RedirectToSignIn />;
+  }
   const { categoryId, name } = await searchParams;
   const data = await prismadb.companion.findMany({
     where: {
@@ -21,7 +27,15 @@ const RootPage = async ({ searchParams }: RootPageProps) => {
       createdAt: "desc",
     },
     include: {
-      _count: { select: { messages: true } },
+      _count: {
+        select: {
+          messages: {
+            where: {
+              userId: userId!,
+            },
+          },
+        },
+      },
     },
   });
   const categories = await prismadb.category.findMany();
